@@ -22,8 +22,11 @@ except e:
 print("\n\nResult Links...\n\n")
 soup=BeautifulSoup(page.read(),features="html.parser")
 k=soup.findAll('a')
+i=0
 for lnk in k:
 	lnk=str(lnk)
 	if lnk.find('class="detLink"')!=-1:
-		print(lnk[lnk.find('>')+1:lnk.find('</a')])
+		i+=1
+		print('['+str(i)+'] '+lnk[lnk.find('>')+1:lnk.find('</a')])
+ln=input("Enter Link Number: ")
 #print(content)
