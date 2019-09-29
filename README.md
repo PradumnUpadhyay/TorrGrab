@@ -2,10 +2,10 @@
 A Torrent Data Scrapper
 
 Current Progress
-[+] Searches Data in PirateBay
-[+] Gets Magnet Link
-[ ] Download The Torrent
-[ ] Option To search Different Torrent Sites
+[+] Searches Data in PirateBay  <br>
+[+] Gets Magnet Link  <br>
+[ ] Download The Torrent  <br>
+[ ] Option To search Different Torrent Sites  <br>
 
 Current module checks Pirate bay only
 
