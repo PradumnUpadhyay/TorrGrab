@@ -15,4 +15,7 @@ Any PRs Are Welcome !!!
 
 Install Python3 First
 
-```python torrgrab.py```
+```
+pip install -r requirements.txt
+python torrgrab.py
+```
