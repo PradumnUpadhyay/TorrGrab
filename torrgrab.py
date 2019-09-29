@@ -51,11 +51,20 @@ for lnk in k:
 				ps=tlnk.find("magnet:?")
 				tlnk=tlnk[ps:tlnk.find('"',ps)]
 				mlink.append(tlnk)
-				print(tlnk)
-				print('')
+				#print(tlnk)
+				#print('')
 				break
 inp=input("Enter Link Number: ")
 
 name=nm[inp-1]
 magnet=mlink[inp-1]
 
+print("\n\n\n")
+print("Title: ",name)
+print("Magnet Link: ",magnet)
+print("\n\n\n")
+fn=name.replace(" ","_")+".torrent"
+f=open(fn,"w")
+f.write(magnet)
+f.close()
+print("Torrent File Saved To ",fn)
