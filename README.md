@@ -10,3 +10,9 @@ Current Progress
 Current module checks Pirate bay only
 
 Any PRs Are Welcome !!!
+
+## RUN
+
+Install Python3 First
+
+```python torrgrab.py```
