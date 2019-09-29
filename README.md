@@ -1,7 +1,12 @@
 # TorrGrab
-A Private Torrent Data Scrapper Till Now
+A Torrent Data Scrapper
 
-We will make public in future
+Current Progress
+[+] Searches Data in PirateBay
+[+] Gets Magnet Link
+[ ] Download The Torrent
+[ ] Option To search Different Torrent Sites
 
 Current module checks Pirate bay only
 
+Any PRs Are Welcome !!!
