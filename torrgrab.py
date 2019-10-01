@@ -1,5 +1,6 @@
 import urllib.request,urllib.parse
 from bs4 import BeautifulSoup
+import os
 
 pblnk="https://indiaboat.art"
 term=input("Enter What to search: ")
@@ -54,11 +55,12 @@ for lnk in k:
 				#print(tlnk)
 				#print('')
 				break
-inp=input("Enter Link Number: ")
+inp=int(input("Enter Link Number: "))
 
 name=nm[inp-1]
 magnet=mlink[inp-1]
 
+print("Files will be Downloaded by default torrent app on your System\n\n")
 print("\n\n\n")
 print("Title: ",name)
 print("Magnet Link: ",magnet)
@@ -68,3 +70,5 @@ f=open(fn,"w")
 f.write(magnet)
 f.close()
 print("Torrent File Saved To ",fn)
+
+os.startfile(magnet)
