@@ -4,7 +4,8 @@ A Torrent Data Scrapper
 Current Progress  <br>
 [+] Searches Data in PirateBay  <br>
 [+] Gets Magnet Link  <br>
-[ ] Download The Torrent  <br>
+[+] Download The Torrent  <br>
+[ ] Give Option To Download inside Terminal <br>
 [ ] Option To search Different Torrent Sites  <br>
 
 
@@ -18,6 +19,7 @@ Any PRs Are Welcome !!!
 
 
 Install Python3 First
+Install A Torrent client 
 
 ```
 pip install -r requirements.txt
