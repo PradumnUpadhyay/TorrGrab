@@ -4,6 +4,8 @@ try:
 except:
 	print('Please Install BeautifulSoup4')
 import os
+import platform
+import subprocess
 
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -101,7 +103,12 @@ print("Torrent File Saved To ",fn)
 
 cho=input('\n\n\nStart Download (Y/N) : ')
 if cho.lower().strip()=='y':
-	os.startfile(fn)
+	if platform.system() == 'Windows':
+	    os.startfile(fn)
+	elif platform.system() == 'Darwin':  # macOS
+	    subprocess.call(('open', fn))
+	elif platform.system() == 'Linux':                                  
+	    subprocess.call(('xdg-open', fn))
 else:
 	print('Exiting TorrGrab')
 	exit()
