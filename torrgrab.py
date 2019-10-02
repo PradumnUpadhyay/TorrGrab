@@ -3,10 +3,7 @@ try:
 	from bs4 import BeautifulSoup
 except:
 	print('Please Install BeautifulSoup4')
-import os
-import platform
-import subprocess
-
+import os, sys, subprocess
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -103,12 +100,15 @@ print("Torrent File Saved To ",fn)
 
 cho=input('\n\n\nStart Download (Y/N) : ')
 if cho.lower().strip()=='y':
-	if platform.system() == 'Windows':
+	if sys.platform == "win32":
 	    os.startfile(fn)
-	elif platform.system() == 'Darwin':  # macOS
-	    subprocess.call(('open', fn))
-	elif platform.system() == 'Linux':                                  
-	    subprocess.call(('xdg-open', fn))
+	else:
+		opener = "open" if sys.platform == "darwin" else "xdg-open"
+		subprocess.call([opener, fn])
+# 	elif platform.system() == 'Darwin':  # macOS
+# 	    subprocess.call(('open', fn))
+# 	elif platform.system() == 'Linux':                                  
+# 	    subprocess.call(('xdg-open', fn))
 else:
 	print('Exiting TorrGrab')
 	exit()
