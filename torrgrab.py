@@ -5,6 +5,15 @@ except:
 	print('Please Install BeautifulSoup4')
 import os, sys, subprocess
 
+banner = '''
+  ______                ______           __  
+ /_  __/___  __________/ ____/________ _/ /_ 
+  / / / __ \/ ___/ ___/ / __/ ___/ __ `/ __ \
+ / / / /_/ / /  / /  / /_/ / /  / /_/ / /_/ /
+/_/  \____/_/  /_/   \____/_/   \__,_/_.___/  V.1.0
+'''
+print(banner)
+
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
@@ -18,7 +27,7 @@ def piratebay(term):
 	global nm,mlink
 
 	pblnk="https://indiaboat.art"
-	print('\n\nPlease Wait Searching Data...')
+	print('\n\n[i] Please Wait Searching Data...')
 	term=urllib.parse.quote_plus(term.strip())
 	site=pblnk+"/s/?q="+term+"&page=&orderby="
 	np=0
@@ -28,10 +37,10 @@ def piratebay(term):
 		try:
 		    page = urllib.request.urlopen(req)
 		except:
-		    print('Connection Error')
+		    print('[-] Connection Error')
 		soup=BeautifulSoup(page.read(),features="html.parser")
 		k=soup.findAll('a')
-		print("\n\nFetching Data...\n\n")
+		print("\n\n[i] Fetching Data...\n\n")
 		i=0
 		nm=[]
 		link=[]
@@ -62,7 +71,7 @@ def piratebay(term):
 						#print(tlnk)
 						#print('')
 						break
-		cho=input('\n\n\nLoad More (Y/N) : ')
+		cho=input('\n\n\n[i] Load More (Y/N) : ')
 		if cho.lower().strip()=='y':
 			np+=1
 			site=pblnk+"/s/?q="+term+"&page="+str(np)+"&orderby="
@@ -71,15 +80,15 @@ def piratebay(term):
 
 
 
-term=input("Enter What to search: ")
-print("Search Engines Available: 1\n\n")
+term=input("[i] Enter What to search: ")
+print("[i] Search Engines Available: 1\n\n")
 print('\t[1]\tPirateBay')
 
 cho=input("Choose Engine [ 1 - 1 ]: ")
 if "1" in cho:
 	piratebay(term)
 else:
-	print('Wrong Input ...\n\nUsing PirateBay By default')
+	print('[-] Wrong Input.. \n\n[i] Using PirateBay By default')
 	piratebay(term)
 
 inp=int(input("Enter Link Number: "))
@@ -87,18 +96,16 @@ inp=int(input("Enter Link Number: "))
 name=nm[inp-1]
 magnet=mlink[inp-1]
 
-print("Files will be Downloaded by default torrent app on your System\n\n")
-print("\n\n\n")
-print("Title: ",name)
-print("Magnet Link: ",magnet)
-print("\n\n\n")
+print("[i] Files will be Downloaded by default torrent app on your System\n\n")
+print("\n\n\n[i] Title: ",name)
+print("[i] Magnet Link: ",magnet)
 fn=name.replace(" ","_")+".torrent"
 f=open(fn,"w")
 f.write(magnet)
 f.close()
-print("Torrent File Saved To ",fn)
+print("\n\n\n[i] Torrent File Saved To ",fn)
 
-cho=input('\n\n\nStart Download (Y/N) : ')
+cho=input('\n\n\n[i] Start Download (Y/N) : ')
 if cho.lower().strip()=='y':
 	if sys.platform == "win32":
 	    os.startfile(fn)
@@ -110,5 +117,5 @@ if cho.lower().strip()=='y':
 # 	elif platform.system() == 'Linux':                                  
 # 	    subprocess.call(('xdg-open', fn))
 else:
-	print('Exiting TorrGrab')
+	print('[i] Exiting TorrGrab..')
 	exit()
