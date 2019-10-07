@@ -4,7 +4,7 @@ import os, sys, subprocess
 banner = """
   ______                ______           __
  /_  __/___  __________/ ____/________ _/ /_
-  / / / __ \/ ___/ ___/ / __/ ___/ __ `/ __ \
+  / / / __ \/ ___/ ___/ / __/ ___/ __ `/ __ \\
  / / / /_/ / /  / /  / /_/ / /  / /_/ / /_/ /
 /_/  \____/_/  /_/   \____/_/   \__,_/_.___/  V.1.0
 
@@ -34,6 +34,8 @@ def scrapmagnet(site,se="pirate"):
 		p2=page.find('" title',p1)
 		mglink=page[p1:p2].strip()
 		return mglink
+	else:
+		return site
 def piratebay(term):
 	global name,link
 #	term=term.replace(' ','+')
@@ -42,7 +44,6 @@ def piratebay(term):
 	term=urllib.parse.quote_plus(term.strip())
 	site=pblnk+"/s/?q="+term+"&page=&orderby="
 	np=0
-	print(site)
 	#site="https://indiaboat.art/s/?q=Sacred+games&page=&orderby="
 	while True:
 		print("\n\n[i] Fetching Data...\n\n")
@@ -81,7 +82,7 @@ def piratebay(term):
 			break
 
 def torrentz(term):
-	global nm,mlink
+	global name,link
 	term=term.replace(' ','+')
 	pblnk="https://torrentz2eu.in"
 	print('\n\n[i] Please Wait Searching Data...')
@@ -94,7 +95,25 @@ def torrentz(term):
 	    page = urllib.request.urlopen(req)
 	except:
 	    print('[-] Connection Error')
-
+	name=[]
+	link=[]
+	seed=[]
+	info=[]
+	page=page.read().decode('utf-8')
+	det=page.split('<tr>')[1:]
+	for dt in det:
+		p1=dt.find('Name">')+6
+		tmp=dt[p1:dt.find('</td>',p1)]
+		name.append(tmp)
+		p1=dt.find('Seeds">')+7
+		tmp=dt[p1:dt.find('</td>',p1)]
+		seed.append(tmp)
+		p1=dt.find('Size">')+6
+		tmp=dt[p1:dt.find('</td>',p1)]
+		info.append('Size: '+tmp)
+		p1=dt.find('magnet',p1)+6
+		tmp=dt[p1:dt.find('"',p1)]
+		link.append(tmp)
 term=input("[?] Enter What to search: ")
 while " " in term:
 	print('Spaces Are Not Allowed In Searches \n You Can use WildCards.')
@@ -103,10 +122,14 @@ print("[i] Search Engines Available: 2\n\n")
 print('\t[1]\tPirateBay')
 print('\t[2]\tTorrentz')
 
+se=''
+
 cho=input("Choose Engine [ 1 - 2 ]: ")
 if "1" in cho:
+	se='piratebay'
 	piratebay(term)
 elif "2" in cho:
+	se='torrentz'
 	torrentz(term)
 else:
 	print('[-] Wrong Input.. \n\n[i] Using PirateBay By default')
@@ -115,7 +138,7 @@ else:
 inp=int(input("Enter Link Number: "))
 
 name=name[inp-1]
-magnet=scrapmagnet(link[inp-1])
+magnet=scrapmagnet(link[inp-1],se)
 
 print("[i] Files will be Downloaded by default torrent app on your System\n\n")
 print("\n\n\n[i] Title: ",name)
@@ -135,7 +158,7 @@ if cho.lower().strip()=='y':
 		subprocess.call([opener, fn])
 # 	elif platform.system() == 'Darwin':  # macOS
 # 	    subprocess.call(('open', fn))
-# 	elif platform.system() == 'Linux':                                  
+# 	elif platform.system() == 'Linux':
 # 	    subprocess.call(('xdg-open', fn))
 else:
 	print('[i] Exiting TorrGrab..')
