@@ -9,7 +9,10 @@ Current Progress  <br>
 [ ] Option To search Different Torrent Sites  <br>
 
 
-Current module checks Pirate bay only
+Current module checks: 
+
+Piratebay<br>
+Torrentz
 
 
 Any PRs Are Welcome !!!
@@ -22,6 +25,5 @@ Install Python3 First
 Install A Torrent client 
 
 ```
-pip install -r requirements.txt
 python torrgrab.py
 ```
