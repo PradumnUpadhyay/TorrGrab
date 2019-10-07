@@ -87,7 +87,7 @@ def torrentz(term):
 	pblnk="https://torrentz2eu.in"
 	print('\n\n[i] Please Wait Searching Data...')
 	term=urllib.parse.quote_plus(term.strip())
-	site=pblnk+"/?q="
+	site=pblnk+"/?q="+term
 	np=0
 	#site="https://torrentz2eu.in/?q=sacred+games"
 	req = urllib.request.Request(site, headers=hdr)
@@ -100,7 +100,7 @@ def torrentz(term):
 	seed=[]
 	info=[]
 	page=page.read().decode('utf-8')
-	det=page.split('<tr>')[1:]
+	det=page.split('<tr>')[2:]
 	for dt in det:
 		p1=dt.find('Name">')+6
 		tmp=dt[p1:dt.find('</td>',p1)]
@@ -114,19 +114,27 @@ def torrentz(term):
 		p1=dt.find('magnet',p1)+6
 		tmp=dt[p1:dt.find('"',p1)]
 		link.append(tmp)
-term=input("[?] Enter What to search: ")
-while " " in term:
-	print('Spaces Are Not Allowed In Searches \n You Can use WildCards.')
-	term=input("[?] Enter What to search: ")
-print("[i] Search Engines Available: 2\n\n")
+	for i in range(len(link)):
+		print(f'''\n\n[ {i+1} ] TORRENT NUMBER #{i+1} ''')
+		print('\tName: ',name[i])
+		#print('\tLink: ',link[i])
+		print('\tSeed: ',seed[i])
+		print('\tInfo: ',info[i])
+
+print("[i] Search Engines Available: 2\n")
 print('\t[1]\tPirateBay')
 print('\t[2]\tTorrentz')
-
+print('\n\n')
 se=''
 
 cho=input("Choose Engine [ 1 - 2 ]: ")
+
+term=input("[?] Enter What to search: ")
 if "1" in cho:
 	se='piratebay'
+	while " " in term:
+		print('Spaces Are Not Allowed In Searches \n You Can use WildCards.')
+		term=input("[?] Enter What to search: ")
 	piratebay(term)
 elif "2" in cho:
 	se='torrentz'
@@ -134,9 +142,14 @@ elif "2" in cho:
 else:
 	print('[-] Wrong Input.. \n\n[i] Using PirateBay By default')
 	piratebay(term)
-
-inp=int(input("Enter Link Number: "))
-
+if len(link)==0:
+	print("Sorry No Links Found...\nExiting Termux")
+	exit()
+try:
+	inp=int(input("Enter Link Number: "))
+except:
+	print('Exiting TorrGrab')
+	exit()
 name=name[inp-1]
 magnet=scrapmagnet(link[inp-1],se)
 
