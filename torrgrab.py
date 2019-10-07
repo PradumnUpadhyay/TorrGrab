@@ -1,17 +1,14 @@
 import urllib.request,urllib.parse
-try:
-	from bs4 import BeautifulSoup
-except:
-	print('Please Install BeautifulSoup4')
 import os, sys, subprocess
 
-banner = '''
-  ______                ______           __  
- /_  __/___  __________/ ____/________ _/ /_ 
+banner = """
+  ______                ______           __
+ /_  __/___  __________/ ____/________ _/ /_
   / / / __ \/ ___/ ___/ / __/ ___/ __ `/ __ \
  / / / /_/ / /  / /  / /_/ / /  / /_/ / /_/ /
 /_/  \____/_/  /_/   \____/_/   \__,_/_.___/  V.1.0
-'''
+
+"""
 print(banner)
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -20,81 +17,105 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
        'Accept-Encoding': 'none',
        'Accept-Language': 'en-US,en;q=0.8',
        'Connection': 'keep-alive'}
-nm=[]
-mlink=[]
-
+name=[]
+link=[]
+def scrapmagnet(site,se="pirate"):
+	if "pirate" in se.lower():
+		req = urllib.request.Request(site, headers=hdr)
+		try:
+		    page = urllib.request.urlopen(req)
+		except:
+		    pass
+		page=page.read().decode('utf-8')
+		p1=page.find('<dt>Info Hash:</dt><dd></dd>')+32
+		p2=page.find('</dl',p1)
+		print("Hash: ",page[p1:p2].strip())
+		p1=page.find('href="magnet:?')+6
+		p2=page.find('" title',p1)
+		mglink=page[p1:p2].strip()
+		return mglink
 def piratebay(term):
-	global nm,mlink
-
+	global name,link
+#	term=term.replace(' ','+')
 	pblnk="https://indiaboat.art"
 	print('\n\n[i] Please Wait Searching Data...')
 	term=urllib.parse.quote_plus(term.strip())
 	site=pblnk+"/s/?q="+term+"&page=&orderby="
 	np=0
+	print(site)
 	#site="https://indiaboat.art/s/?q=Sacred+games&page=&orderby="
 	while True:
+		print("\n\n[i] Fetching Data...\n\n")
 		req = urllib.request.Request(site, headers=hdr)
 		try:
 		    page = urllib.request.urlopen(req)
 		except:
 		    print('[-] Connection Error')
-		soup=BeautifulSoup(page.read(),features="html.parser")
-		k=soup.findAll('a')
-		print("\n\n[i] Fetching Data...\n\n")
-		i=0
-		nm=[]
+		page=page.read().decode('utf-8')
+		det=page.split('<div class="detName">')[1:]
+		name=[]
 		link=[]
-		mlink=[]
-		for lnk in k:
-			lnk=str(lnk)
-			if lnk.find('class="detLink"')!=-1:
-				i+=1
-				nm.append(lnk[lnk.find('>')+1:lnk.find('</a')])
-				print('['+str(i)+'] '+nm[i-1])
-				tlnk=lnk.find("href=")+6
-				tlnk=lnk[tlnk:lnk.find('"',tlnk)]
-				link.append(pblnk+tlnk)
-				site=link[i-1]
-				req = urllib.request.Request(site, headers=hdr)
-				try:
-				    page = urllib.request.urlopen(req)
-				except:
-				    pass
-				soup=BeautifulSoup(page.read(),features="html.parser")
-				kt=soup.findAll('a')
-				for tlnk in kt:
-					tlnk=str(tlnk)
-					if 'magnet:?' in tlnk:
-						ps=tlnk.find("magnet:?")
-						tlnk=tlnk[ps:tlnk.find('"',ps)]
-						mlink.append(tlnk)
-						#print(tlnk)
-						#print('')
-						break
-		cho=input('\n\n\n[i] Load More (Y/N) : ')
+		seed=[]
+		info=[]
+		for dt in det:
+			tmp=dt[dt.find('href="')+6:dt.find('" class')]
+			link.append(pblnk+tmp)
+			tmp=dt[dt.find('">',dt.find('detLink')+10)+2:dt.find('</a>')]
+			name.append(tmp)
+			tmp=dt[dt.find('detDesc">')+9:dt.find('ULed')]
+			info.append(tmp)
+			tmp=dt[dt.find('align="right">')+14:dt.find('</td>',dt.find('align="right">')+13)]
+			seed.append(tmp)
+		for i in range(len(link)):
+			print(f'''[ {i+1} ] TORRENT NUMBER #{i+1} ''')
+			print('\tName: ',name[i])
+			#print('\tLink: ',link[i])
+			print('\tSeed: ',seed[i])
+			print('\tInfo: ',info[i])
+			print('\n')
+		cho=input('\n\n\n[!] Load More (Y/N) : ')
 		if cho.lower().strip()=='y':
 			np+=1
 			site=pblnk+"/s/?q="+term+"&page="+str(np)+"&orderby="
 		else:
 			break
 
+def torrentz(term):
+	global nm,mlink
+	term=term.replace(' ','+')
+	pblnk="https://torrentz2eu.in"
+	print('\n\n[i] Please Wait Searching Data...')
+	term=urllib.parse.quote_plus(term.strip())
+	site=pblnk+"/?q="
+	np=0
+	#site="https://torrentz2eu.in/?q=sacred+games"
+	req = urllib.request.Request(site, headers=hdr)
+	try:
+	    page = urllib.request.urlopen(req)
+	except:
+	    print('[-] Connection Error')
 
-
-term=input("[i] Enter What to search: ")
-print("[i] Search Engines Available: 1\n\n")
+term=input("[?] Enter What to search: ")
+while " " in term:
+	print('Spaces Are Not Allowed In Searches \n You Can use WildCards.')
+	term=input("[?] Enter What to search: ")
+print("[i] Search Engines Available: 2\n\n")
 print('\t[1]\tPirateBay')
+print('\t[2]\tTorrentz')
 
-cho=input("Choose Engine [ 1 - 1 ]: ")
+cho=input("Choose Engine [ 1 - 2 ]: ")
 if "1" in cho:
 	piratebay(term)
+elif "2" in cho:
+	torrentz(term)
 else:
 	print('[-] Wrong Input.. \n\n[i] Using PirateBay By default')
 	piratebay(term)
 
 inp=int(input("Enter Link Number: "))
 
-name=nm[inp-1]
-magnet=mlink[inp-1]
+name=name[inp-1]
+magnet=scrapmagnet(link[inp-1])
 
 print("[i] Files will be Downloaded by default torrent app on your System\n\n")
 print("\n\n\n[i] Title: ",name)
