@@ -120,6 +120,19 @@ def torrentz(term):
 		#print('\tLink: ',link[i])
 		print('\tSeed: ',seed[i])
 		print('\tInfo: ',info[i])
+def mag2tor(name,hash):
+	base="https://itorrents.org"
+	base+="/torrent/"+hash+".torrent"
+	opener = urllib.request.build_opener()
+	opener.addheaders= [('User-agent', 'Mozilla/5.0')]
+	urllib.request.install_opener(opener)
+	try:
+		urllib.request.urlretrieve(base, name)
+		print("\n\n\n[i] Torrent File Saved To ",name)
+		return True
+	except:
+		print("\n\n\n[!] You Need To use A VPN To Fetch Torrent...")
+		return False
 
 print("[i] Search Engines Available: 2\n")
 print('\t[1]\tPirateBay')
@@ -140,7 +153,7 @@ elif "2" in cho:
 	se='torrentz'
 	torrentz(term)
 else:
-	print('[-] Wrong Input.. \n\n[i] Using PirateBay By default')
+	print('[-] Wrong Input.. \n\n[i]Using PirateBay By default')
 	piratebay(term)
 if len(link)==0:
 	print("Sorry No Links Found...\nExiting Termux")
@@ -152,15 +165,20 @@ except:
 	exit()
 name=name[inp-1]
 magnet=scrapmagnet(link[inp-1],se)
+hash=magnet[magnet.find('btih:')+5:magnet.find('&')]
+fn=name.replace(" ","_")+".torrent"
 
 print("[i] Files will be Downloaded by default torrent app on your System\n\n")
 print("\n\n\n[i] Title: ",name)
 print("[i] Magnet Link: ",magnet)
-fn=name.replace(" ","_")+".torrent"
-f=open(fn,"w")
-f.write(magnet)
-f.close()
-print("\n\n\n[i] Torrent File Saved To ",fn)
+print("[i] Info Hash: ",hash)
+print('\n\n Fetching .torrent File From Magnet Link...')
+res=mag2tor(fn,hash)
+
+if not res:
+	print('[i] Exiting TorrGrab..')
+	exit()
+
 
 cho=input('\n\n\n[i] Start Download (Y/N) : ')
 if cho.lower().strip()=='y':
