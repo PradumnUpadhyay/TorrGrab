@@ -9,6 +9,20 @@ Current Progress  <br>
 [ ] Option To search Different Torrent Sites  <br>
 
 
+## RUN
+
+Install Python3 and A Torrent client 
+```
+python torrgrab.py
+```
+To Update Type
+```
+python torrgrab.py -u 
+```
+# INFO
+
+Thanks To <a href="https://github.com/PradumnUpadhyay"> Pradumn </a> For Helping me out ...
+
 Current module checks: 
 
 Piratebay<br>
@@ -16,14 +30,3 @@ Torrentz
 
 
 Any PRs Are Welcome !!!
-
-
-## RUN
-
-
-Install Python3 First
-Install A Torrent client 
-
-```
-python torrgrab.py
-```

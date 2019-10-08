@@ -134,6 +134,10 @@ def mag2tor(name,hash):
 		print("\n\n\n[!] You Need To use A VPN To Fetch Torrent...")
 		return False
 
+if len(sys.argv)==2:
+	if "u" in sys.argv[1]:
+		print('\n\nUpdating TorrGrab...')
+		urllib.request.urlretrieve('https://raw.githubusercontent.com/TheSpeedX/TorrGrab/master/torrgrab.py', 'torrgrab.py')
 print("[i] Search Engines Available: 2\n")
 print('\t[1]\tPirateBay')
 print('\t[2]\tTorrentz')
