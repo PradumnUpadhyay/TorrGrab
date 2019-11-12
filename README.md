@@ -21,7 +21,7 @@ python torrgrab.py -u
 ```
 # INFO
 
-Thanks To <a href="https://github.com/PradumnUpadhyay"> Pradumn </a> For Helping me out ...
+Thanks To <a href="https://github.com/TheSpeedX"> SpeedX </a> For Helping me out ...
 
 Current module checks: 
 
