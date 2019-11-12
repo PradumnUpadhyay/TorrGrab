@@ -191,10 +191,6 @@ if cho.lower().strip()=='y':
 	else:
 		opener = "open" if sys.platform == "darwin" else "xdg-open"
 		subprocess.call([opener, fn])
-# 	elif platform.system() == 'Darwin':  # macOS
-# 	    subprocess.call(('open', fn))
-# 	elif platform.system() == 'Linux':
-# 	    subprocess.call(('xdg-open', fn))
 else:
 	print('[i] Exiting TorrGrab..')
 	exit()
