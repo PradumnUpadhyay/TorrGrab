@@ -7,7 +7,6 @@ banner = """
   / / / __ \/ ___/ ___/ / __/ ___/ __ `/ __ \\
  / / / /_/ / /  / /  / /_/ / /  / /_/ / /_/ /
 /_/  \____/_/  /_/   \____/_/   \__,_/_.___/  V.1.0
-
 """
 print(banner)
 
@@ -38,11 +37,11 @@ def scrapmagnet(site,se="pirate"):
 		return site
 def piratebay(term):
 	global name,link
-	term=term.replace(' ','+')
-	pblnk="https://indiaboat.art"
+	# term=term.replace(' ','+')
+	pblnk="https://pirateproxy.us/"
 	print('\n\n[i] Please Wait Searching Data...')
 	term=urllib.parse.quote_plus(term.strip())
-	site=pblnk+"/search.php?q="+term+"&category=0&page=0&orderby=99"
+	site=pblnk+"search.php?q="+term+"&category=0&page=0&orderby=99"
 	np=0
 	#site="https://indiaboat.art/s/?q=Sacred+games&page=&orderby="
 	while True:
@@ -149,9 +148,10 @@ cho=input("Choose Engine [ 1 - 2 ]: ")
 term=input("[?] Enter What to search: ")
 if "1" in cho:
 	se='piratebay'
-	while " " in term:
-		print('Spaces Are Not Allowed In Searches \n You Can use WildCards.')
-		term=input("[?] Enter What to search: ")
+	if " " in term:
+		#print('Spaces Are Not Allowed In Searches \n You Can use WildCards.')
+		term=term.replace(" ", "+")
+		print(term)
 	piratebay(term)
 elif "2" in cho:
 	se='torrentz'
